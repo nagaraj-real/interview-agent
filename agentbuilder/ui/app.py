@@ -4,12 +4,13 @@ import gradio as gr
 from agentbuilder.llm import load_chat_llm
 from agentbuilder.ui.chat_ui import chat_with_agent
 from agentbuilder.agents.interview_agent.data import interview_state
+from agentbuilder.data import data_path
+
 
 load_dotenv(override=True)
 load_chat_llm()
 
 state = interview_state.get()
-current_path = str(Path(__file__).parent)
 
 with gr.Blocks() as chatdemo:
     chatbot = gr.Chatbot(scale=1, height=400)
@@ -94,16 +95,16 @@ with gr.Blocks() as documents:
         outputs=gr.TextArea(label="Job Description",placeholder="Job description",interactive=True)  
     )
     def load_resume_job():
-        with open(current_path+"./../data/resume.txt", "r") as f:
+        with open(f"{data_path}/resume.txt", "r") as f:
             resume = f.read()
-        with open(current_path+"./../data/job_description.txt", "r") as f:
+        with open(f"{data_path}/job_description.txt", "r") as f:
             job = f.read()
         return resume,job
     
     def save_docs(resume,job):
-        with open(current_path+"./../data/resume.txt", "w") as f:
+        with open(f"{data_path}/resume.txt", "w") as f:
             f.write(resume)
-        with open(current_path+"./../data/job_description.txt", "w") as f:
+        with open(f"{data_path}/job_description.txt", "w") as f:
             f.write(job)
     
     submit_docs = gr.Button(value="Save",variant="primary")

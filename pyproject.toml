@@ -25,9 +25,6 @@ gradio = { version = "*" }
 langchain-nvidia-ai-endpoints = { version = "*" }
 
 
-[tool.poetry.scripts]
-start-ui = "agentbuilder.ui.app:main"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

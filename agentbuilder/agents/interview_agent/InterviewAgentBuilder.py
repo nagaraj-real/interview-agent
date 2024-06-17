@@ -12,7 +12,7 @@ class InterviewAgentBuilder(BaseNemoGuardRailsBuilder):
     config:RailsConfig = None
     def __init__(self,params):
         super().__init__(params=params)
-        self.config=RailsConfig.from_path(str(Path(__file__).parent)+"./config")
+        self.config=RailsConfig.from_path(str(Path(__file__).parent)+"/config")
         self.chat_llm = nvidia_chat(model="meta/llama3-70b-instruct")
         self.guardrails= RunnableAgentRails(config=self.config,llm=self.chat_llm,verbose=True)
 

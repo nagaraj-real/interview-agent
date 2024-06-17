@@ -5,7 +5,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores.faiss import FAISS
 from agentbuilder.llm import get_embed_llm
-
+from agentbuilder.data import data_path
 
 # Set embeddings
 embd = get_embed_llm()
@@ -13,7 +13,7 @@ current_path = str(Path(__file__).parent)
 
 # Docs to index
 urls = [
-   current_path+"./../../data/job_description.txt",
+   f"{data_path}/job_description.txt",
 ]
 
 # Load

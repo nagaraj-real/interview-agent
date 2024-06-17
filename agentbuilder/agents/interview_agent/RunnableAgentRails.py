@@ -9,6 +9,8 @@ from langchain_core.runnables.utils import Input, Output
 
 from nemoguardrails.rails.llm.options import GenerationOptions
 
+
+# Overriding the Class to bypass 'output_vars' error in colang version 2.x
 class RunnableAgentRails(RunnableRails):
     def invoke(
         self,

@@ -3,45 +3,18 @@ from agentbuilder.logger import uvicorn_logger as logger
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.embeddings import Embeddings
 from agentbuilder.llm.openai_llm import openai_chat,openai_embed
-from agentbuilder.llm.nvidia_llm import nvidia_chat
 from langchain.agents import create_tool_calling_agent
-import os
 
 chat_llm = None
 
 def get_chat_llm(*args,**Kwargs):
-    model_name= os.getenv("MODEL_NAME")
-    if model_name is None:
-     return openai_chat(*args,**default_kwargs)
-    (provider,model)=extract_after_slash(model_name)
-    default_kwargs ={"model": model}
-    default_kwargs.update(Kwargs)
-    logger.info(f"using chat provider: {provider}")
-    match provider:
-        case "openai":
-            return openai_chat(*args,**default_kwargs)
-        case "nvidia":
-            return nvidia_chat(*args,**default_kwargs)
-        case _:
-            raise Exception(f"Model not found: {model}")
-
+     return openai_chat(*args,**Kwargs)
 
 def create_agent(*args,**Kwargs):
     return create_tool_calling_agent(*args,**Kwargs)
 
 def get_embed_llm(*args,**Kwargs) -> Embeddings:
-    model_name= os.getenv("EMBED_MODEL_NAME")
-    if model_name is None:
-     return openai_chat(*args,**default_kwargs) 
-    (provider,model)=extract_after_slash(model_name)
-    default_kwargs ={"model": model}
-    default_kwargs.update(Kwargs)
-    logger.info(f"using embed provider: {provider}")
-    match provider:
-        case "openai":
-            return openai_embed(*args,**default_kwargs)
-        case _:
-            raise Exception(f"Embed Model not found: {model}")
+     return openai_embed(*args,**Kwargs) 
 
 def get_casual_chat_prompt(preamble:str|None)->ChatPromptTemplate:
     prompt = ChatPromptTemplate.from_messages(
