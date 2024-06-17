@@ -24,9 +24,7 @@
    gradio ./agentbuilder/ui/app.py
 ```
 
-#### [Optional] Start using Poetry
-
-For fine-grained dependency management, use [Poetry](https://python-poetry.org/) to pick and choose dependency packs based on your LLM model provider and tool features.
+#### [Alternate] Start using Poetry
 
 1. Follow the [Offical Instruction Guide](https://python-poetry.org/docs/#installation) to install Poetry.
 
