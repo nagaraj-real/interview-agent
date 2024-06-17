@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "agentbuilder"
+version = "0.1.0"
+description = "Agent builder API"
+authors = ["Nagarajan Ramasamy"]
+packages = [{ include = "agentbuilder" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10.0,<=3.12.4"
+langchain = "*"
+langchain-community = "*"
+langchain-experimental = "*"
+langchainhub = "*"
+fastapi = "*"
+uvicorn = "0.30.0"
+python-dotenv = "1.0.1"
+colorama = "0.4.6"
+faiss-cpu = { version = "1.8.0" }
+beautifulsoup4 = { version = "4.12.3" }
+tiktoken = { version = "0.7.0" }
+ipython = { version = "8.24.0" }
+langchain-openai = { version = "0.1.7" }
+nemoguardrails = { version = "0.9.0" }
+gradio = { version = "*" }
+langchain-nvidia-ai-endpoints = { version = "*" }
+
+
+[tool.poetry.scripts]
+start-ui = "agentbuilder.ui.app:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
