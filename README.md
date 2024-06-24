@@ -84,7 +84,7 @@ The entire state of the conversation is updated live. The candidate at any time 
 
 ## Agents in Depth
 
-<img src="https://github.com/nagaraj-real/interview-agent/assets/17967313/e1569c00-7750-4f54-849b-4dabf4e34559" height="500">
+![interview_agent drawio](https://github.com/nagaraj-real/interview-agent/assets/17967313/a5097b4b-dd53-4701-a1bf-46026a170928)
 
 ### Resume Vector Agent
 
