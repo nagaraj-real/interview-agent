@@ -8,7 +8,6 @@
    python -m venv --prompt interview-agent venv
    source venv/bin/activate
    # venv/Scripts/activate (Windows)
-   pip install -r requirements.txt
    pip install .
 ```
 
