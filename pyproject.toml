@@ -23,7 +23,7 @@ langchain-openai = { version = "0.1.7" }
 nemoguardrails = { version = "0.9.0" }
 gradio = { version = "*" }
 langchain-nvidia-ai-endpoints = { version = "*" }
-
+langgraph = { version = "*" }
 
 [build-system]
 requires = ["poetry-core"]
