@@ -64,9 +64,9 @@ The Agents are executed using [Langchain](https://www.langchain.com/) and [Nemo 
 
 **interview_agent**: The primary agent that interacts with the user. It uses other agents to complete the workflow.
 
-**resume_vector_agent**: The agent uses RAG (retrieval augmented generation) to read candidate's resume, job description and produces a list of recommended skills.
+**resume_vector_agent**: The agent uses RAG (retrieval augmented generation) to read the candidate's resume, and job description and produces a list of recommended skills.
 
-**interview_question_agent**: The agent uses job summary, user selected programming language as inputs to generate an interview question.
+**interview_question_agent**: The agent uses a job summary, and selected programming language as inputs to generate an interview question.
 
 **rating_agent**: Evaluation Agent that provides rating and explanation based on the provided questions and answers.
 
@@ -74,8 +74,8 @@ The Agents are executed using [Langchain](https://www.langchain.com/) and [Nemo 
 ## Guardrails
 
 Using Nemo Guardrails, the Interview Agent is designed to follow a fixed workflow updating the global **Interview State**.
-Using Input Rails, the agent refuses to respond to user messages that contain harmful intentions.
 This also prohibits the AI agent from responding on its own thereby avoiding hallucination and unpredictable AI responses.
+As an additional guard, Input Rails are configured to invoke refusal from agents when responding to user messages that contain harmful intentions.
 
 ## Interview State
 
@@ -84,7 +84,43 @@ The entire state of the conversation is updated live. The candidate at any time 
 
 ## Agents in Depth
 
-### Interview Agent
+<img src="https://github.com/nagaraj-real/interview-agent/assets/17967313/e1569c00-7750-4f54-849b-4dabf4e34559" height="500">
+
+### Resume Vector Agent
+
+The Agent uses the NV-Embed-QA model by integrating NIM endpoints and Langchain. The workflow is designed using Langraph.
+The following sequence of steps is executed:
+- Skills are extracted from the job description and resume using RAG retriever.
+- Job summary is captured using RAG summarization and stored in state.
+- Finally, the recommended skills are captured from LLM and stored in state.
+
+![image](https://github.com/nagaraj-real/interview-agent/assets/17967313/5803cc75-a6cf-4af8-bcd2-332aaa519bf5)
+
+### Interview Question Agent
+
+The agent executes in a loop asking interview questions and capturing both the question and answer in state.
+The number of questions for the interview is made configurable using state.
+
+![image](https://github.com/nagaraj-real/interview-agent/assets/17967313/9e73b502-f1d9-4c29-9635-5fb35cfacc22)
+
+### Rating Agent
+
+The agent loops through the answers provided by the user and gives a rating with an explanation. 
+Finally, the evaluation is rendered as a markdown.
+
+![image](https://github.com/nagaraj-real/interview-agent/assets/17967313/e14e5a0d-fb07-43a2-ad7d-7c54405f8997)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
