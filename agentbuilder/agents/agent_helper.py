@@ -1,7 +1,7 @@
 from agentbuilder.logger import uvicorn_logger as logger
 from typing import Any, Callable
 from langchain.tools import BaseTool
-from agentbuilder.agents.BaseAgentBuilder import AgentBuilderParams, BaseAgentBuilder
+from agentbuilder.agents.base_agent_builder import AgentBuilderParams, BaseAgentBuilder
 from agentbuilder.agents.params import AgentParams
 from agentbuilder.factory.tool_factory import get_all_tools
 from agentbuilder.factory.agent_factory import get_agent_builder
@@ -26,7 +26,6 @@ async def get_agent(agent_name:str|None):
 
 async def build_agent(agent_name:str|None)-> None | BaseAgentBuilder:
      agent_params = await get_agent(agent_name)
-     print(agent_params)
      if agent_params is None:
           return None
      return create_llm_agent(agent_params)

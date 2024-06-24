@@ -1,9 +1,8 @@
-from pathlib import Path
 from dotenv import load_dotenv
 import gradio as gr
 from agentbuilder.llm import load_chat_llm
 from agentbuilder.ui.chat_ui import chat_with_agent
-from agentbuilder.agents.interview_agent.data import interview_state
+from agentbuilder.agents.interview.data import interview_state
 from agentbuilder.data import data_path
 
 
@@ -15,21 +14,22 @@ state = interview_state.get()
 with gr.Blocks() as chatdemo:
     chatbot = gr.Chatbot(scale=1, height=400)
     msg = gr.Textbox(label="Message",placeholder="Enter your message here",interactive=True)
-    agent = gr.Dropdown(label="Select Agent", choices=["interview_agent"], value="interview_agent",interactive=False)
+    agent = gr.Dropdown(label="Select Agent", choices=["interview_agent","rating_agent","interview_question_agent","resume_vector_agent"], value="interview_agent",interactive=False)
     code = gr.Code(language='javascript',interactive=True)
     submit_code = gr.Button(value="Submit",variant="primary")
     clear = gr.ClearButton([msg, chatbot,code])
 
     async def code_response(message:str,value:str, chat_history:list,agent:str):
         text_value= message or ""
-        human_message=text_value + (value or "")
+        code_text = "" if value is None or value == "" else f"""\n```javascript\n {value} \n```"""
+        human_message=text_value + code_text
         bot_message = await chat_with_agent(human_message, chat_history,agent)
         chat_history.append((human_message, bot_message))
         return "","", chat_history
 
     
     msg.submit(code_response, [msg,code,chatbot,agent], [msg,code, chatbot])
-    submit_code.click(code_response,[msg,code,chatbot,agent],[code,code, chatbot])
+    submit_code.click(code_response,[msg,code,chatbot,agent],[msg,code, chatbot])
     
 
 with gr.Blocks() as optionsdemo:
@@ -106,6 +106,7 @@ with gr.Blocks() as documents:
             f.write(resume)
         with open(f"{data_path}/job_description.txt", "w") as f:
             f.write(job)
+        interview_state.get_model().suggested_skills=[]
     
     submit_docs = gr.Button(value="Save",variant="primary")
         

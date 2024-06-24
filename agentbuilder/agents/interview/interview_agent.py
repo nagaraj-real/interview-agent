@@ -1,11 +1,10 @@
 from pathlib import Path
-from agentbuilder.agents.BaseNemoGuardRailsBuilder import BaseNemoGuardRailsBuilder
+from agentbuilder.agents.base_nemo_guard_rails_builder import BaseNemoGuardRailsBuilder
 from nemoguardrails import RailsConfig
 from langchain_core.runnables import Runnable,RunnableLambda
 from langchain_core.messages import AIMessage,HumanMessage
-from agentbuilder.agents.interview_agent.RunnableAgentRails import RunnableAgentRails
-from agentbuilder.agents.interview_agent.data import interview_state
-from agentbuilder.llm.nvidia_llm import nvidia_chat
+from agentbuilder.agents.interview.RunnableAgentRails import RunnableAgentRails
+from agentbuilder.agents.interview.data import interview_state
 
 class InterviewAgentBuilder(BaseNemoGuardRailsBuilder):
     guardrails = None 
@@ -13,7 +12,7 @@ class InterviewAgentBuilder(BaseNemoGuardRailsBuilder):
     def __init__(self,params):
         super().__init__(params=params)
         self.config=RailsConfig.from_path(str(Path(__file__).parent)+"/config")
-        self.chat_llm = nvidia_chat(model="meta/llama3-70b-instruct")
+        self.chat_llm = self.builder_params.chat_llm
         self.guardrails= RunnableAgentRails(config=self.config,llm=self.chat_llm,verbose=True)
 
     def create_agent(self) -> Runnable:
